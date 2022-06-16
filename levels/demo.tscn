@@ -1,0 +1,35 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://levels/tile_maps/default.tscn" type="PackedScene" id=1]
+[ext_resource path="res://actors/player/player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://actors/pickups/heart/heart.tscn" type="PackedScene" id=3]
+[ext_resource path="res://actors/interactables/death_zone/death_zone.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/hud/hud.tscn" type="PackedScene" id=5]
+[ext_resource path="res://actors/enemies/bat/bat.tscn" type="PackedScene" id=8]
+[ext_resource path="res://levels/tile_maps/default_one_way.tscn" type="PackedScene" id=9]
+
+[node name="LevelDemo" type="Node2D"]
+
+[node name="TileMap" parent="." instance=ExtResource( 1 )]
+tile_data = PoolIntArray( 0, 0, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 16, 1, 0, 17, 1, 0, 18, 1, 0, 19, 1, 0, 20, 1, 0, 21, 1, 0, 22, 1, 0, 23, 1, 0, 24, 2, 0, 65536, 7, 0, 65560, 3, 0, 131072, 7, 0, 131096, 3, 0, 196608, 7, 0, 196632, 3, 0, 262144, 7, 0, 262156, 18, 0, 262157, 19, 0, 262158, 20, 0, 262168, 3, 0, 327680, 7, 0, 327704, 3, 0, 393216, 7, 0, 393221, 18, 0, 393222, 19, 0, 393223, 20, 0, 393240, 3, 0, 458752, 7, 0, 458776, 3, 0, 524288, 9, 0, 524289, 10, 0, 524290, 10, 0, 524291, 10, 0, 524292, 10, 0, 524293, 10, 0, 524294, 10, 0, 524295, 10, 0, 524296, 10, 0, 524297, 10, 0, 524298, 10, 0, 524299, 10, 0, 524300, 10, 0, 524301, 10, 0, 524302, 10, 0, 524303, 11, 0, 524307, 9, 0, 524308, 10, 0, 524309, 10, 0, 524310, 10, 0, 524311, 10, 0, 524312, 11, 0, 589824, 14, 0, 589825, 13, 0, 589826, 13, 0, 589827, 13, 0, 589828, 13, 0, 589829, 13, 0, 589830, 13, 0, 589831, 13, 0, 589832, 13, 0, 589833, 13, 0, 589834, 13, 0, 589835, 13, 0, 589836, 13, 0, 589837, 13, 0, 589838, 13, 0, 589839, 12, 0, 589843, 14, 0, 589844, 13, 0, 589845, 13, 0, 589846, 13, 0, 589847, 13, 0, 589848, 12, 0, 655360, 15, 0, 655361, 16, 0, 655362, 16, 0, 655363, 16, 0, 655364, 16, 0, 655365, 16, 0, 655366, 16, 0, 655367, 16, 0, 655368, 16, 0, 655369, 16, 0, 655370, 16, 0, 655371, 16, 0, 655372, 16, 0, 655373, 16, 0, 655374, 16, 0, 655375, 17, 0, 655379, 15, 0, 655380, 16, 0, 655381, 16, 0, 655382, 16, 0, 655383, 16, 0, 655384, 17, 0 )
+
+[node name="TileMapOneWay" parent="." instance=ExtResource( 9 )]
+tile_data = PoolIntArray( 196613, 0, 0, 196614, 1, 0, 196615, 2, 0 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 98, 444 )
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+
+[node name="Bat" parent="." instance=ExtResource( 8 )]
+position = Vector2( 1284, 465 )
+
+[node name="Heart" parent="." instance=ExtResource( 3 )]
+position = Vector2( 416, 352 )
+
+[node name="DeathZone" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1076, 810 )
+scale = Vector2( 3.00354, 2.74869 )
+
+[node name="HUD" parent="." instance=ExtResource( 5 )]

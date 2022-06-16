@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://actors/player/player_sprite_frames.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://actors/player/Player.cs" type="Script" id=2]
+[ext_resource path="res://actors/player/sounds/jump.ogg" type="AudioStream" id=3]
+
+[sub_resource type="RectangleShape2D" id=27]
+extents = Vector2( 43, 46 )
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = ExtResource( 1 )
+animation = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -3, 15 )
+shape = SubResource( 27 )
+
+[node name="SoundJump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -20.0
+bus = "Sound"

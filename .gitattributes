@@ -1,0 +1,28 @@
+﻿* text=auto
+
+# Windows natives
+*.sln eol=crlf
+*.bat eol=crlf
+
+# Images
+*.icns binary
+*.ico binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+
+# Fonts
+*.ttf binary
+
+# Executables
+*.jar binary
+*.exe binary
+
+# Audio
+*.ogg binary
+*.wav binary
+*.aif binary
+
+# Other
+*.tza binary

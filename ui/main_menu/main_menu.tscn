@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/main_menu/MainMenu.cs" type="Script" id=1]
+[ext_resource path="res://ui/main_menu/music/swinging_pants.ogg" type="AudioStream" id=2]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="ButtonContainer" type="VBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 32.0
+margin_top = -256.0
+margin_right = 256.0
+margin_bottom = -32.0
+alignment = 2
+
+[node name="StartButton" type="Button" parent="ButtonContainer"]
+margin_top = 156.0
+margin_right = 224.0
+margin_bottom = 176.0
+focus_neighbour_top = NodePath("../ExitButton")
+text = "New Game"
+
+[node name="OptionsButton" type="Button" parent="ButtonContainer"]
+margin_top = 180.0
+margin_right = 224.0
+margin_bottom = 200.0
+text = "Options"
+
+[node name="ExitButton" type="Button" parent="ButtonContainer"]
+margin_top = 204.0
+margin_right = 224.0
+margin_bottom = 224.0
+focus_neighbour_bottom = NodePath("../StartButton")
+text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -20.0
+autoplay = true
+bus = "Music"
+
+[connection signal="pressed" from="ButtonContainer/StartButton" to="." method="_onStartButtonPressed"]
+[connection signal="pressed" from="ButtonContainer/OptionsButton" to="." method="_onOptionsButtonPressed"]
+[connection signal="pressed" from="ButtonContainer/ExitButton" to="." method="_onExitButtonPressed"]
