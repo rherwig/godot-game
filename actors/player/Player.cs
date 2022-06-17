@@ -10,6 +10,7 @@ public class Player : KinematicBody2D
 
 	private Vector2 _velocity = Vector2.Zero;
 
+	private GameState _gameState;
 	private AnimatedSprite _sprite;
 	private Camera2D _camera;
 	private AudioStreamPlayer _soundJump;
@@ -23,6 +24,7 @@ public class Player : KinematicBody2D
 
 	public override void _Ready()
 	{
+		_gameState = GetNode<GameState>(GameState.NodePath);
 		_sprite = GetNode<AnimatedSprite>("AnimatedSprite");
 		_soundJump = GetNode<AudioStreamPlayer>("SoundJump");
 		_camera = GetNode<Camera2D>("Camera2D");
@@ -75,7 +77,7 @@ public class Player : KinematicBody2D
 
 	public void HandleDeath()
 	{
-		GetTree().ReloadCurrentScene();
+		_gameState.Respawn(GetTree().GetNetworkUniqueId());
 	}
 
 	public override void _Process(float delta)

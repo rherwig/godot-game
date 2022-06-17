@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using System.Collections.Generic;
 
@@ -12,8 +13,11 @@ public class GameState : Node
 
     private NetworkedMultiplayerENet _peer;
 
+    private Node _currentLevel;
+
     private Dictionary<int, string> _networkPlayers = new Dictionary<int, string>();
     private List<int> _networkPlayersReady = new List<int>();
+    private Dictionary<int, Vector2> _spawnPositions = new Dictionary<int, Vector2>();
 
     [Signal]
     public delegate void PlayerListChanged();
@@ -78,8 +82,8 @@ public class GameState : Node
     {
         GetTree().Paused = true;
 
-        var level = GD.Load<PackedScene>("res://levels/demo.tscn").Instance();
-        GetTree().Root.CallDeferred("add_child", level);
+        _currentLevel = GD.Load<PackedScene>("res://levels/demo.tscn").Instance();
+        GetTree().Root.CallDeferred("add_child", _currentLevel);
 
         var playerScene = GD.Load<PackedScene>("res://actors/player/player.tscn");
 
@@ -88,14 +92,16 @@ public class GameState : Node
             var playerId = spawnPoint.Key;
             var spawnPointIndex = spawnPoint.Value;
 
-            var spawnPosition = level.GetNode<Node2D>($"SpawnPoints/Spawn{spawnPointIndex}").Position;
             var player = playerScene.Instance<Player>();
+            var spawnPosition = _currentLevel.GetNode<Node2D>($"SpawnPoints/Spawn{spawnPointIndex}").Position;
+
+            _spawnPositions.Add(playerId, spawnPosition);
 
             player.Name = playerId.ToString();
             player.Position = spawnPosition;
             player.SetNetworkMaster(playerId);
 
-            level.AddChild(player);
+            _currentLevel.AddChild(player);
         }
 
         if (!GetTree().IsNetworkServer())
@@ -138,6 +144,14 @@ public class GameState : Node
     public void PostStartGame()
     {
         GetTree().Paused = false;
+    }
+
+    public void Respawn(int id)
+    {
+        var player = _currentLevel.GetNode<Player>(id.ToString());
+        var spawnPosition = _spawnPositions[id];
+
+        player.Position = spawnPosition;
     }
 
     public void StartGame()
