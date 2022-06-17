@@ -17,6 +17,7 @@ public class Player : KinematicBody2D
 	private Vector2 _startScale = Vector2.Zero;
 
 	private int _health = 1;
+	private bool _hurtPeriod = false;
 	private bool _invulnerable = false;
 	private float _invulnerabilityTimer;
 
@@ -65,8 +66,17 @@ public class Player : KinematicBody2D
 
 		if (knockback)
 		{
-			_velocity.x = _sprite.Scale.x * -1;
+			_velocity.x = _sprite.Scale.x * -5;
+			_hurtPeriod = true;
+			GetNode<Timer>("HurtTimer").Start();
 		}
+	}
+
+	// ReSharper disable once UnusedMember.Local
+	private void OnHurtTimerTimeout()
+	{
+		_hurtPeriod = false;
+		Visible = true;
 	}
 
 	void EnterGracePeriod()
@@ -90,6 +100,13 @@ public class Player : KinematicBody2D
 
 	public override void _PhysicsProcess(float delta)
 	{
+		if (_hurtPeriod)
+		{
+			MoveAndSlide(_velocity, Vector2.Up);
+			Visible = !Visible;
+			return;
+		}
+
 		var isJumping = Input.IsActionJustPressed("player_jump") && IsOnFloor();
 		var isFalling = _velocity.y > 0 && !IsOnFloor();
 		var isJumpCancelled = Input.IsActionJustReleased("player_jump");

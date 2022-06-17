@@ -27,3 +27,9 @@ shape = SubResource( 27 )
 stream = ExtResource( 3 )
 volume_db = -20.0
 bus = "Sound"
+
+[node name="HurtTimer" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+
+[connection signal="timeout" from="HurtTimer" to="." method="OnHurtTimerTimeout"]
