@@ -1,4 +1,5 @@
 ﻿# IDE
+*.user
 .idea/
 .vscode/
 

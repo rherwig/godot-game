@@ -7,4 +7,7 @@
     <Content Include=".gitattributes" />
     <Content Include=".gitignore" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Godot.NET.Sdk" Version="3.3.0" />
+  </ItemGroup>
 </Project>

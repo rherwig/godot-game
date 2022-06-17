@@ -6,6 +6,8 @@ public class Player : KinematicBody2D
 	[Export] public float Gravity = 4500;
 	[Export] public float JumpStrength = 1500;
 
+	public int MAXIMUM_HEALTH = 2;
+
 	private Vector2 _velocity = Vector2.Zero;
 
 	private AnimatedSprite _sprite;
@@ -13,9 +15,11 @@ public class Player : KinematicBody2D
 	private AudioStreamPlayer _soundJump;
 	private Vector2 _startScale = Vector2.Zero;
 
-	[Puppet] private Vector2 _puppetVelocity = Vector2.Zero;
+	private int _health = 1;
+	private bool _invulnerable = false;
+	private float _invulnerabilityTimer;
 
-	private int _health = 0;
+	[Puppet] private Vector2 _puppetVelocity = Vector2.Zero;
 
 	public override void _Ready()
 	{
@@ -30,14 +34,56 @@ public class Player : KinematicBody2D
 		}
 	}
 
-	public void CollectHeart()
+	// Handles Health increase on Heart pickup and returns new Health on success and -1 if Health is already full
+	public int CollectHeart()
 	{
+		if (_health >= MAXIMUM_HEALTH) return -1;
 		_health++;
+		return GetHealth();
 	}
 
 	public int GetHealth()
 	{
 		return _health;
+	}
+
+	public void HandleDamageTaken(int damage, bool knockback = false)
+	{
+		_health -= damage;
+		if (_health < 1)
+		{
+			HandleDeath();
+			return;
+		}
+
+		var hud = GetTree().Root.GetNode<HUD>("LevelDemo/HUD");
+		hud.UpdateHeartHud(GetHealth(), damage * -1);
+
+		EnterGracePeriod();
+
+		if (knockback)
+		{
+			_velocity.x = _sprite.Scale.x * -1;
+		}
+	}
+
+	void EnterGracePeriod()
+	{
+		_invulnerable = true;
+		_invulnerabilityTimer = 1.0f;
+	}
+
+	public void HandleDeath()
+	{
+		GetTree().ReloadCurrentScene();
+	}
+
+	public override void _Process(float delta)
+	{
+		if (!_invulnerable) return;
+		_invulnerabilityTimer -= delta;
+		if (!(_invulnerabilityTimer < 0)) return;
+		_invulnerable = false;
 	}
 
 	public override void _PhysicsProcess(float delta)

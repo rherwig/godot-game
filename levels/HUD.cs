@@ -1,23 +1,48 @@
+using System;
 using Godot;
 
 public class HUD : CanvasLayer
 {
-	private Label _heartsLabel = null;
-	
 	private GlobalSignals _globalSignal;
 
 	public override void _Ready()
 	{
-		_heartsLabel = GetNode<Label>("Panel/MarginContainer/HBoxContainer/HeartsLabel");
 		_globalSignal = GetNode<GlobalSignals>(GlobalSignals.NodePath);
-
-		_heartsLabel.Text = "0";
 
 		_globalSignal.Connect(nameof(GlobalSignals.HeartCollected), this, nameof(_collectHeart));
 	}
 
+	public void UpdateHeartHud(int health, int diff)
+	{
+		if (diff == 0)
+		{
+			return;
+		}
+
+		// player got healed
+		if (diff > 0)
+		{
+			for (var i = 0; i < health; i++)
+			{
+				var heartIcon = GetNode<TextureRect>("Panel/MarginContainer/HBoxContainer/HeartTexture" +
+													 (health - diff - i).ToString());
+				heartIcon.Visible = true;
+			}
+
+			return;
+		}
+
+		// player got damaged
+		for (var i = health + diff; i < health; i++)
+		{
+			var heartIcon = GetNode<TextureRect>("Panel/MarginContainer/HBoxContainer/HeartTexture" +
+												 (i + 1).ToString());
+			heartIcon.Visible = false;
+		}
+	}
+
 	private void _collectHeart(Player player)
 	{
-		_heartsLabel.Text = player.GetHealth().ToString();
+		UpdateHeartHud(player.GetHealth(), 1);
 	}
 }

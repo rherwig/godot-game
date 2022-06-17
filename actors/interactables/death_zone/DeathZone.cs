@@ -4,11 +4,11 @@ public class DeathZone : Area2D
 {
 	public override void _Ready()
 	{
-		
+
 	}
-	
-	private void _onDeathZoneBodyEntered(object body)
+
+	private void _onDeathZoneBodyEntered(Player body)
 	{
-		GetTree().ReloadCurrentScene();
+		body.HandleDeath();
 	}
 }

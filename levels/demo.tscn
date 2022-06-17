@@ -21,6 +21,9 @@ position = Vector2( 1284, 465 )
 [node name="Heart" parent="." instance=ExtResource( 3 )]
 position = Vector2( 416, 352 )
 
+[node name="Heart2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 416, 150 )
+
 [node name="DeathZone" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1076, 810 )
 scale = Vector2( 3.00354, 2.74869 )
