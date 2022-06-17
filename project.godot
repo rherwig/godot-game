@@ -11,17 +11,30 @@ config_version=4
 [application]
 
 config/name="BetterTogether"
-run/main_scene="res://levels/demo.tscn"
+run/main_scene="res://levels/debug_single_player.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 GlobalSignals="*res://globals/GlobalSignals.cs"
+GameState="*res://globals/GameState.cs"
+
+[debug]
+
+multirun/number_of_windows=2
+multirun/window_distance=1270
+multirun/add_custom_args=true
+multirun/first_window_args="listen"
+multirun/other_window_args="join"
 
 [display]
 
 window/size/width=1280
 window/size/height=768
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/multirun/plugin.cfg" )
 
 [importer_defaults]
 

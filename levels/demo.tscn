@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://levels/tile_maps/default.tscn" type="PackedScene" id=1]
-[ext_resource path="res://actors/player/player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://actors/pickups/heart/heart.tscn" type="PackedScene" id=3]
 [ext_resource path="res://actors/interactables/death_zone/death_zone.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/hud/hud.tscn" type="PackedScene" id=5]
@@ -16,12 +15,6 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 
 [node name="TileMapOneWay" parent="." instance=ExtResource( 9 )]
 tile_data = PoolIntArray( 196613, 0, 0, 196614, 1, 0, 196615, 2, 0 )
 
-[node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 98, 444 )
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-current = true
-
 [node name="Bat" parent="." instance=ExtResource( 8 )]
 position = Vector2( 1284, 465 )
 
@@ -33,3 +26,11 @@ position = Vector2( 1076, 810 )
 scale = Vector2( 3.00354, 2.74869 )
 
 [node name="HUD" parent="." instance=ExtResource( 5 )]
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="Spawn0" type="Node2D" parent="SpawnPoints"]
+position = Vector2( 128, 448 )
+
+[node name="Spawn1" type="Node2D" parent="SpawnPoints"]
+position = Vector2( 608, 448 )
