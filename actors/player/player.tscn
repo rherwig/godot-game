@@ -21,6 +21,8 @@ animation = "idle"
 position = Vector2( -3, 15 )
 shape = SubResource( 27 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+
 [node name="SoundJump" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 volume_db = -20.0
